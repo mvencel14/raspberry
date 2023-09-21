@@ -1,0 +1,58 @@
+version: "3"
+
+services:
+  unbound:
+    image: "mvance/unbound-rpi:latest"
+    container_name: unbound
+    restart: unless-stopped
+    ports:
+      - 5335:53/udp
+      - 5335:53/tcp
+    volumes:
+      - "/opt/docker/unbound/unbound.conf:/opt/unbound/etc/unbound/unbound.conf"
+
+  wireguard:
+    depends_on: [unbound, pihole]
+    image: linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Budapest # Change to your timezone
+      - SERVERURL=78.139.16.149
+      - SERVERPORT=51820
+      - PEERS=1 # How many peers to generate for you (clients)
+      - PEERDNS=192.168.0.101 # Set it to point to pihole
+      - INTERNAL_SUBNET=10.13.13.0
+      - LOG_CONFS=true
+      
+    volumes:
+      - /opt/docker/wireguard/config:/config
+      - /lib/modules:/lib/modules
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+
+  pihole:
+    depends_on: [unbound]
+    container_name: pihole
+    image: pihole/pihole:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      TZ: "Europe/Budapest"
+      WEBPASSWORD: "" # Blank password - Can be whatever you want.
+    # Volumes store your data between container upgrades
+    volumes:
+      - "/opt/docker/pihole/etc-pihole:/etc/pihole"
+      - "/opt/docker/pihole/etc-dnsmasq.d:/etc/dnsmasq.d"
+      - "/opt/docker/pihole/etc-lighttpd/lighttpd.conf:/etc/lighttpd/lighttpd.conf"
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN

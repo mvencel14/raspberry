@@ -1,0 +1,2 @@
+UUID=e41be295-aa9c-4df0-9e6f-bebb477a2406       /ClosedHDD      xfs     nofail,x-systemd.device-timeout=15      0 2
+UUID=ea5b98ea-28a7-4b2e-9516-859ffb9859ec       /OpenSSD        xfs     nofail,x-systemd.device-timeout=15      0 2
