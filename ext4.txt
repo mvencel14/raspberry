@@ -1,0 +1,1 @@
+mkfs.ext4 -O dir_index,filetype,has_journal,sparse_super2 -m 0 -L usb_hdd /dev/sda1
