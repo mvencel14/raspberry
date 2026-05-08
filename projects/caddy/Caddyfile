@@ -1,0 +1,14 @@
+pihole.home {
+    tls internal
+    reverse_proxy 192.168.0.192:8082
+}
+
+vault.home {
+    tls internal
+    reverse_proxy 192.168.0.192:8083
+}
+
+torrent.home {
+    tls internal
+    reverse_proxy 192.168.0.192:8084
+}
