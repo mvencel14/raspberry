@@ -6,5 +6,6 @@ services:
     network_mode: host
     environment:
       - ROCKET_PORT=8083
+      - DISABLE_ADMIN_TOKEN=false
     volumes:
       - ./vw-data/:/data/
