@@ -7,6 +7,7 @@ services:
       - NET_ADMIN
     network_mode: host
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./caddy_data:/data
       - ./caddy_config:/config
