@@ -5,6 +5,7 @@ services:
     restart: unless-stopped
     network_mode: host
     environment:
+      - TZ=Europe/Budapest
       - ROCKET_PORT=8083
       - DISABLE_ADMIN_TOKEN=false
     volumes:
