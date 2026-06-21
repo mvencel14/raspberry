@@ -25,6 +25,9 @@ services:
       FTLCONF_dns_upstreams: "127.0.0.1#5335"  # unbound is on localhost with host networking
       FTLCONF_dns_listeningMode: "LOCAL"
       FTLCONF_dns_bogusPriv: "true"
+      FTLCONF_ntp_ipv4_active: "false"
+      FTLCONF_ntp_ipv6_active: "false"
+      FTLCONF_ntp_sync_active: "false"
     volumes:
       - ./pihole/etc-pihole:/etc/pihole
     cap_add:
