@@ -1,0 +1,13 @@
+services:
+  dockhand:
+    image: fnsys/dockhand:latest
+    container_name: dockhand
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./dockhand_data:/app/data
+      - /srv/projects:/srv/projects
+
+volumes:
+  dockhand_data:
